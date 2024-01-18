@@ -1,0 +1,147 @@
+server:
+  AppVersion: 1.0.0
+  Port: :5002
+  Mode: Development
+  JwtSecretKey: secretkey
+  CookieName: inv-token
+  ReadTimeout: 5
+  WriteTimeout: 5
+  SSL: true
+  CtxDefaultTimeout: 12
+  CSRF: true
+  Debug: false
+  MaxConnectionIdle: 5
+  Timeout: 15
+  MaxConnectionAge: 5
+  Time: 120
+  ServiceName: fulfillment_inventory
+  TimeConvert: "2006-01-02"
+
+logger:
+  DisableCaller: false
+  DisableStacktrace: false
+  Level: info
+
+MySql:
+  MySqlHost: test-ffm-db1.inshasaki.com
+  MySqlPort: 3306
+  MySqlUser: wmsqc
+  MySqlPassword: PassQWd@#23
+  MySqlDbname: qc_fulfillment_inventory
+  MySqlSslmode: false
+  MySqlDriver: mysql
+
+redis:
+  RedisAddr: localhost:6370
+  RedisPassword:
+  RedisDb: 0
+  RedisDefaultdb: 0
+  MinIdleConns: 200
+  PoolSize: 12000
+  PoolTimeout: 240
+  Password: ""
+  DB: 0
+
+cookie:
+  Name: authscv-token
+  MaxAge: 86400
+  Secure: false
+  HttpOnly: true
+
+session:
+  Name: session-id
+  Prefix: api-session
+  Expire: 3600
+
+rabbitmq:
+  Host: 10.10.12.161
+  Port: 5672
+  User: hasakidev
+  Password: pwrvYm4vL8jA4fP
+  Vhost:    wms
+
+deadletter:
+  Queue: wms-dead-letter
+  exchange: wms-dead-letter
+  type: topic
+  attempts: 10
+
+ConsumerMessage:
+
+PublisherMessage:
+
+Media:
+  Host: https://test-ws.inshasaki.com/api/setting/upload
+  PrefixOutput: https://media-test.inshasaki.com
+  MaxRetry: 3
+  SleepSec: 10
+  
+ApiExternal:
+  Hasaki: https://test-ws.inshasaki.com/api
+  HasakiLogin: true
+  Workflow: 
+    MajorId: 9
+    Endpoint: https://wshr.inshasaki.com/api
+    Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjQxMDI0MTk1OTksInN1YiI6MCwiaXNzIjoiaHR0cDovL3dzaHIuaW5zaGFzYWtpLmNvbS9hcGkvaHIvdXNlci1kdW1teS9nZW5lcmF0ZS1kdW1teS10b2tlbiIsImlhdCI6MTY3NjYzMDM2NiwibmJmIjoxNjc2NjMwMzY2LCJqdGkiOiJLQXpsS0NjVWZvdENtaUlYIn0.KpU7yg3l8AAU8aJJaFUL_sW_s7l3MR7Dx5mGYCuhqlA
+    Code:
+      Request: HSK-05
+      VendorReturn: HSK-04
+      SaleOff: HSK-03
+      Demolishment: HSK-02
+      Consume: HSK-01
+    Names:
+      "HSK-05": "Quy trình khai báo sản phẩm không phù hợp"
+      "HSK-04": "Xử lý hàng NG đổi trả nhà cung cấp"
+      "HSK-03": "Xử lý hàng NG sale off"
+      "HSK-02": "Xử lý hàng NG tiêu hủy"
+      "HSK-01": "Xử lý hàng NG xuất sử dụng"
+    Notes:
+      USProductRequest: "Phiếu sản phẩm không phù hợp: https://ff-frontend-test.inshasaki.com/inventory/unsuitable-product"
+      USProductWFSaleOff: "Danh sách phiếu giảm giá: "
+      USProductWFAdjustment: "Danh sách phiếu điều chỉnh nội bộ: "
+  ApiHasaki:
+        Endpoint: https://api.hasaki.vn/ajax
+        Api:
+            ProductImage: product.getImage
+
+Alert:
+  WebhookUrl: xxx
+  User: "exodia"
+  Avatar: "https://images.ygoprodeck.com/images/cards_cropped/33396948.jpg"
+ 
+Storage:
+  Host: http://wshr.inshasaki.com/api/crm/task-fanpage/upload-file
+  Token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjQxMDI0MTk1OTksInN1YiI6MCwiaXNzIjoiaHR0cDovL3dzaHIuaW5zaGFzYWtpLmNvbS9hcGkvaHIvdXNlci1kdW1teS9nZW5lcmF0ZS1kdW1teS10b2tlbiIsImlhdCI6MTY3NjYzMDM2NiwibmJmIjoxNjc2NjMwMzY2LCJqdGkiOiJLQXpsS0NjVWZvdENtaUlYIn0.KpU7yg3l8AAU8aJJaFUL_sW_s7l3MR7Dx5mGYCuhqlA
+
+ESIndex:
+    IndexInventory: qc_fulfillment.qc_fulfillment_inventory.wms_inventory
+    IndexProduct: qc_fulfillment.qc_fulfillment_inventory.wms_product
+    IndexInboundShmt: qc_fulfillment.qc_fulfillment_inventory.wms_inbound_shmt
+    IndexInboundShmtItem: qc_fulfillment.qc_fulfillment_inventory.wms_inbound_shmt_item
+    IndexOutboundOrder: qc_fulfillment.qc_fulfillment_inventory.wms_outbound_order
+    IndexOutboundOrderItem: qc_fulfillment.qc_fulfillment_inventory.wms_outbound_order_item 
+
+ES:
+    Addrs: [https://elk-dev:9200/]
+    User: devuser
+    Password: a2WSzAYDvgF3cZbm
+kafka:
+  Addrs:
+    - kafka.inshasaki.com:30011
+    - kafka.inshasaki.com:30012
+    - kafka.inshasaki.com:30013
+    # - localhost:9092
+
+  Group: local-inventory
+  MaxMessageBytes: 64
+  Compress: true
+  Newest: false
+  Version: 2.6.0
+
+KafkaTopics:
+  Consumers:
+    # xxx: xxx
+  Producers:
+    QueueAsn: local.wms.asn
+    QueuePutAway: local.wms.put_away
+    WmsOrderPickPack: local.wms.outbox.order.pick_pack
